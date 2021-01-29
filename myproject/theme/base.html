@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
+{% load pages_tags mezzanine_tags i18n staticfiles %}
+
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+<link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+
+<style>
+    @media (max-width: 991px) and (min-width: 767px){
+.navbar .container {
+    width: 100%!important;
+}
+.navbar-form .form-group {
+    width: 120px;
+}
+.nav>li>a {
+    padding: 10px 10px;
+}
+.navbar-form .form-control{
+width:100%!important;}
+}
+</style>
+
+
+{% compress css %}
+
+<!--<link href="{% static "mdb/dist/css/bootstrap.css"%}" rel="stylesheet">-->
+    <!--&lt;!&ndash; Material Design Bootstrap &ndash;&gt;-->
+<!--<link href="{% static "mdb/dist/css/mdb.lite.css"%}"  rel="stylesheet">-->
+<link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
+
+{% block extra_css %}{% endblock %}
+{% endcompress %}
+
+{% compress js %}
+<!--<script type="text/javascript" src="{% static "mdb/dist/js/jquery-3.4.1.min.js" %}" ></script>-->
+<!--<script type="text/javascript" src="{% static "mdb/dist/js/popper.min.js"%}"></script>-->
+<!--&lt;!&ndash; Bootstrap core JavaScript &ndash;&gt;-->
+<!--<script type="text/javascript" src="{% static "mdb/dist//js/bootstrap.min.js"%}"></script>-->
+<!--&lt;!&ndash; MDB core JavaScript &ndash;&gt;-->
+<!--<script type="text/javascript" src="{% static "mdb/dist/js/mdb.min.js"%}"></script>-->
+
+{% block extra_js %}{% endblock %}
+{% endcompress %}
+
+<!--&lt;!&ndash;[if lt IE 9]>-->
+<!--<script src="{% static "js/html5shiv.js" %}"></script>-->
+<!--<script src="{% static "js/respond.min.js" %}"></script>-->
+<!--<![endif]&ndash;&gt;-->
+
+{% block extra_head %}{% endblock %}
+</head>
+
+<body id="{% block body_id %}body{% endblock %}" style="padding-top: 50px;">
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation" >
+        <div class="container nav-container" >
+
+            <div class="navbar-collapse collapse">
+                {% block navbar_title %}
+                            {% if settings.SITE_TITLE %}<a class="navbar-brand" href="/" style="background-color:lightslategray;color: whitesmoke"><strong>{{ settings.SITE_TITLE }}</strong></a>{% endif %}
+                            {% if settings.SITE_TAGLINE %}<h7 class="navbar-text visible-lg" style="color: lightseagreen;" >{{ settings.SITE_TAGLINE }}&nbsp;&nbsp;&nbsp;</h7>{% endif %}
+                {% endblock%}
+                                {% page_menu "pages/menus/dropdown.html" %}
+            </div>
+        </div>
+    </div>
+
+{% block main %}{% endblock %}
+
+
+<br/>
+<br/>
+
+
+
+
+
+{% block footer_js %}
+{% endblock %}
+{% page_menu "includes/footer_scripts.html" %}
+
+</body>
+</html>
+<!--<script type="text/javascript" src="{% static "mdb/dist/js/jquery-3.4.1.min.js" %}" ></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown();
+    });
+
+</script>

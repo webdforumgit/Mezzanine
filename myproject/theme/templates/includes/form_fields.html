@@ -1,0 +1,31 @@
+{% load i18n %}
+{% load mezzanine_tags %}
+<!-- CSS only -->
+<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">-->
+{% nevercache %}
+<input type="hidden" name="referrer" value="{{ request.META.HTTP_REFERER }}">
+{% csrf_token %}
+{% endnevercache %}
+
+{% for field in form_for_fields %}
+{% if field.is_hidden %}
+{{ field }}
+{% else %}
+<div class="form-group md-form input_{{ field.id_for_label }} {{ field.field.type }}
+    {% if field.errors %} has-error{% endif %} ">
+    {% if field.label %}<label class="control-label" for="{{ field.auto_id }}">{{ field.label }}</label>{% endif %}
+    {{ field }}
+    {% if field.errors %}
+    <p class="help-block">
+        {% for e in field.errors %}
+        {% if not forloop.first %} / {% endif %}{{ e }}
+        {% endfor %}
+    </p>
+    {% elif field.help_text %}
+    <!--<p class="help-block">{{ field.help_text }}</p>-->
+    {% elif field.field.required %}
+    <!--<p class="help-block">{% trans "required" %}</p>-->
+    {% endif %}
+</div>
+{% endif %}
+{% endfor %}

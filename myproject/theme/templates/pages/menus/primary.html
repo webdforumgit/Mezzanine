@@ -1,0 +1,25 @@
+{% load pages_tags i18n %}
+<link href="{% static "mdb/dist/css/bootstrap.css"%}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+<link href="{% static "mdb/dist/css/mdb.lite.css"%}"  rel="stylesheet">
+<link rel="stylesheet" href="{% static "css/bootstrap-theme.css" %}">
+{% spaceless %}
+<div class="navbar-collapse collapse">
+<ul id="primary-menu" class="nav navbar-nav mr-auto" >
+    {% for page in page_branch %}
+    {% if not has_home and page.is_primary and forloop.first %}
+    <li id="primary-menu-home" class="first{% if on_home %} active{% endif %} nav-item">
+        <a class="nav-link" href="{% url "home" %}">{% trans "Home" %}</a>
+    </li>
+    {% endif %}
+    {% if page.in_menu %}
+    <li id="primary-menu-{{ page.html_id }} nav-item"
+        class="{% if page.is_current_or_ascendant %}active{% endif %}{% if forloop.last %} last{% endif %}">
+        <a class="nav-link" href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+    <li class="divider-vertical"></li>
+</ul>
+</div>
+{% endspaceless %}

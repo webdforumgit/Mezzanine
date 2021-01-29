@@ -1,0 +1,184 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en" class="full-height">
+{% load pages_tags mezzanine_tags i18n staticfiles %}
+
+<head>
+  <!-- Required meta tags always come first -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <!--<title>Material Design Bootstrap Template</title>-->
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+    <link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="{% static "MDB/css/bootstrap.min.css"%}" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="{% static "MDB/css/mdb.min.css"%}" rel="stylesheet">
+  <style>
+
+    html,
+        body,
+        header,
+        .jarallax {
+          height: 700px;
+        }
+
+        @media (max-width: 740px) {
+          html,
+          body,
+          header,
+          .jarallax {
+            height: 100vh;
+          }
+        }
+
+        @media (min-width: 800px) and (max-width: 850px) {
+          html,
+          body,
+          header,
+          .jarallax {
+            height: 100vh;
+          }
+        }
+
+        @media (min-width: 560px) and (max-width: 650px) {
+          header .jarallax h1 {
+            margin-bottom: .5rem !important;
+          }
+          header .jarallax h5 {
+            margin-bottom: .5rem !important;
+          }
+        }
+
+
+        @media (min-width: 660px) and (max-width: 700px) {
+          header .jarallax h1 {
+            margin-bottom: 1.5rem !important;
+          }
+          header .jarallax h5 {
+            margin-bottom: 1.5rem !important;
+          }
+        }
+
+        .top-nav-collapse {
+            background-color: #9da4b1 !important;
+        }
+        .navbar:not(.top-nav-collapse) {
+            background: transparent !important;
+        }
+        @media (max-width: 768px) {
+            .navbar:not(.top-nav-collapse) {
+                background: #9da4b1 !important;
+            }
+        }
+
+        @media (min-width: 800px) and (max-width: 850px) {
+            .navbar:not(.top-nav-collapse) {
+                background: #9da4b1!important;
+            }
+        }
+
+        footer.page-footer {
+            background-color: #9da4b1;
+        }
+        div .md-form input{
+            width: 100%;
+        }
+      div .md-form textarea{
+            width: 100%;
+        }
+
+    </style>
+</head>
+
+<body>
+
+  <!--Main Navigation-->
+
+
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar ">
+      <div class="container">
+
+        {% block navbar_title %}
+                        {% if settings.SITE_TITLE %}<a class="navbar-brand" href="#"><strong>{{ settings.SITE_TITLE }}</strong></a>{% endif %}
+                        {% if settings.SITE_TAGLINE %}<h7 class="navbar-text visible-lg" style="color: lightseagreen;" > ||&nbsp;&nbsp;{{ settings.SITE_TAGLINE }}&nbsp;&nbsp;||&nbsp;&nbsp;&nbsp;</h7>{% endif %}
+        {% endblock%}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-7"
+          aria-controls="navbarSupportedContent-7" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent-7" style="margin-left: 30%">
+            <!--{% page_menu "pages/menus/dropdown.html" %}-->
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+              <a class="nav-link" href="/">Home </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">About</a>
+            </li>
+              <li class="nav-item">
+              <a class="nav-link" href="/blog/">Projects</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/contact/">Contact</a>
+            </li>
+          </ul>
+
+
+        </div>
+      </div>
+    </nav>
+
+    <!-- Intro Section -->
+
+  <!--Main Navigation-->
+{% block pageheader%}{% endblock %}
+
+  <!--Main Layout-->
+  <div class="container">
+    {% block main %}{% endblock %}
+  </div>
+  <!--Main Layout-->
+
+
+  <!--Footer-->
+  <footer class="page-footer  text-center text-md-left mt-5">
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3 text-center">
+      <div class="container-fluid">
+        © 2021 Copyright: <a href=""> WEBDFORUM </a>
+
+      </div>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+  <!--/.Footer-->
+
+
+  <!--  SCRIPTS  -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="{% static "MDB/js/jquery.min.js" %}"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="{% static "MDB/js/popper.min.js "%}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{% static "MDB/js/bootstrap.min.js"%}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{% static "MDB/js/mdb.min.js"%}"></script>
+  <script>
+    $(document).ready(() => {
+      new WOW().init();
+    });
+  </script>
+</body>
+
+</html>

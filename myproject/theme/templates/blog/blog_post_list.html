@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% load i18n mezzanine_tags blog_tags keyword_tags disqus_tags %}
+
+{% block meta_title %}{% if page %}{{ page.meta_title }}{% else %}{% trans "Blog" %}{% endif %}{% endblock %}
+
+{% block meta_keywords %}{% metablock %}
+{% keywords_for page as keywords %}
+{% for keyword in keywords %}
+    {% if not forloop.first %}, {% endif %}
+    {{ keyword }}
+{% endfor %}
+{% endmetablock %}{% endblock %}
+
+{% block meta_description %}{% metablock %}
+{{ page.description }}
+{% endmetablock %}{% endblock %}
+
+{% block title %}
+{% if page %}
+{% editable page.title %}{{ page.title }}{% endeditable %}
+{% else %}
+{% trans "Blog" %}
+{% endif %}
+{% endblock %}
+{% block pageheader%}
+{% if request.path == '/blog/' %}
+  <header>
+    <div class="view jarallax" data-jarallax='{"speed": 0.2}' style="background-image: url('/static/MDB/img/project.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+      <div class="mask rgba-purple-slight">
+        <div class="container h-100 d-flex justify-content-center align-items-center">
+          <div class="row pt-5 mt-3">
+            <div class="col-md-12 wow fadeIn mb-3">
+              <div class="text-center">
+                <h1 class="h1-reponsive  text-uppercase font-weight-bold mb-3 wow fadeInDown white-text" data-wow-delay="0.3s" style="visibility: visible; animation-name: fadeInDown; animation-iteration-count: 1; animation-delay: 0.3s;"><strong>WORKS</strong></h1>
+                <hr class="hr-light mt-4 wow fadeInDown " data-wow-delay="0.4s" style="visibility: visible; animation-name: fadeInDown; animation-iteration-count: 1; animation-delay: 0.4s;">
+                <h5  class="text-uppercase mb-5 white-text wow fadeInDown" data-wow-delay="0.4s" style="visibility: visible; animation-name: fadeInDown; animation-iteration-count: 1; animation-delay: 0.4s;"><strong>WEB &amp;
+                    DESIGN</strong></h5>
+                <!--<a class="btn btn-outline-white wow fadeInDown waves-effect waves-light" data-wow-delay="0.4s" style="visibility: visible; animation-name: fadeInDown; animation-iteration-count: 1; animation-delay: 0.4s;">portfolio</a>-->
+                <!--<a class="btn btn-outline-white wow fadeInDown waves-effect waves-light" data-wow-delay="0.4s" style="visibility: visible; animation-name: fadeInDown; animation-iteration-count: 1; animation-delay: 0.4s;">About me</a>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% else %}
+    {% block post_detail_header %}{% endblock %}
+{% endif %}
+{% endblock %}
+{% block breadcrumb_menu %}
+{{ block.super }}
+{% if tag or category or year or month or author %}
+<li>{% spaceless %}
+{% if tag %}
+    {% trans "Tag:" %} {{ tag }}
+{% else %}{% if category %}
+    {% trans "Category:" %} {{ category }}
+{% else %}{% if year or month %}
+    {% if month %}{{ month }}, {% endif %}{{ year }}
+{% else %}{% if author %}
+    {% trans "Author:" %} {{ author.get_full_name|default:author.username }}
+{% endif %}{% endif %}{% endif %}{% endif %}
+{% endspaceless %}
+</li>
+{% endif %}
+{% endblock %}
+
+
+
+
+{% block main %}
+<hr class="mb-5">
+
+      <!-- Section: Pricing v.3 -->
+      <section class="text-center my-5 wow fadeIn" data-wow-delay="0.3s">
+        <!-- Section heading -->
+        <h2 class="h1-responsive font-weight-bold text-center my-5">Our pricing plans</h2>
+<div class="row">
+{% for blog_post in blog_posts.object_list %}
+    <div class="col-lg-4 col-md-6 mb-md-0 mb-4">
+        {% if forloop.counter0|divisibleby:2 %}
+        <div class="card purple-gradient">
+            <div class="card-body white-text">
+        {% else %}
+        <div class="card ">
+            <div class="card-body">
+        {% endif %}
+
+            {% block blog_post_list_post_title %}
+                {% editable blog_post.title %}
+                    <h5 class="mb-4">{{ blog_post.title }}</h5>
+                {% endeditable %}
+            {% endblock %}
+            {% block blog_post_list_post_metainfo %}
+                {% editable blog_post.publish_date %}
+                        {% if settings.BLOG_USE_FEATURED_IMAGE and blog_post.featured_image %}
+                            {% block blog_post_list_post_featured_image %}
+                                <div class="d-flex justify-content-center">
+                                  <div class="d-flex justify-content-center align-items-center">
+                                    <img src="{{ MEDIA_URL }}{% thumbnail blog_post.featured_image 110 110 %}">
+                                  </div>
+                                </div>
+                            {% endblock %}
+                        {% endif %}
+                {% endeditable %}
+            {% endblock %}
+
+
+
+
+            <!--//description-->
+            <p >{{ blog_post.description|truncatechars:120 }}</p>
+
+            {% block blog_post_list_post_links %}
+            <div class="blog-list-detail">
+                {% keywords_for blog_post as tags %}
+                {% if tags %}
+                <ul class="list-inline tags">
+                {% trans "Tags" %}:
+                {% spaceless %}
+                {% for tag in tags %}
+                <li><a href="{% url "blog_post_list_tag" tag.slug %}" class="tag">{{ tag }}</a>{% if not forloop.last %}, {% endif %}</li>
+                {% endfor %}
+                {% endspaceless %}
+                </ul>
+                {% endif %}
+                <p>
+                    <a class="btn {% if forloop.counter0|divisibleby:2 %}btn-outline-white{% else %} btn-outline-blue-grey {% endif %} btn-rounded btn-sm" href="{{ blog_post.get_absolute_url }}">{% trans "read more" %}</a>
+                    {% if blog_post.allow_comments %}
+
+                    {% if settings.COMMENTS_DISQUS_SHORTNAME %}
+                    <a href="#"
+                        data-disqus-identifier="{% disqus_id_for blog_post %}">
+                        {% trans "Comments" %}
+
+                    </a>
+
+                    {% else %}
+
+                        <a class="btn {% if forloop.counter0|divisibleby:2 %}btn-outline-white{% else %} btn-outline-blue-grey {% endif %} btn-rounded btn-sm" href="{{ blog_post.get_absolute_url }}#comments">{% blocktrans count comments_count=blog_post.comments_count %}{{ comments_count }} comment{% plural %}{{ comments_count }} comments{% endblocktrans %}</a>
+                    {% endif %}
+                    {% endif %}
+                </p>
+                <div class="chip {% if forloop.counter0|divisibleby:2 %}white{% else %} blue {% endif %} lighten-4 waves-effect waves-effect">
+                {% trans "Posted by" %}:
+                {% with blog_post.user as author %}
+                <a href="{% url "blog_post_list_author" author %}">{{ author.get_full_name|default:author.username }}</a>
+                </div>
+                {% endwith %}
+                {% with blog_post.categories.all as categories %}
+                {% if categories %}
+                <div class="chip {% if forloop.counter0|divisibleby:2 %}white{% else %} blue {% endif %} lighten-4 waves-effect waves-effect">
+                {% trans "Catergory :" %}
+                {% for category in categories %}
+
+
+                <a href="{% url "blog_post_list_category" category.slug %}">{{ category }}</a>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %}
+                <div class="chip {% if forloop.counter0|divisibleby:2 %}white{% else %} blue {% endif %} lighten-4 waves-effect waves-effect">Posted on:
+                {% blocktrans with sometime=blog_post.publish_date %}{{ sometime }} {% endblocktrans %}
+                </div>
+
+
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+</div>
+</section>
+{% pagination_for blog_posts %}
+
+{% if settings.COMMENTS_DISQUS_SHORTNAME %}
+{% include "generic/includes/disqus_counts.html" %}
+{% endif %}
+
+{% endblock %}
+
+{% block right_panel %}
+{% include "blog/includes/filter_panel.html" %}
+{% endblock %}
