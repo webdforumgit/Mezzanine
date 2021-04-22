@@ -347,7 +347,7 @@ FORMS_USE_HTML5=True
 BLOG_USE_FEATURED_IMAGE=True
 
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = "webd.forum@gmail.com"
-EMAIL_HOST_PASSWORD = 'suvam123$%6&'
+EMAIL_HOST_USER = "...@gmail.com"
+EMAIL_HOST_PASSWORD = '*****'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
